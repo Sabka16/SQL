@@ -1,0 +1,40 @@
+--Create a Auto Parts store database
+
+CREATE TABLE store (Id INTEGER PRIMARY KEY,Brand TEXT,Item TEXT,Section TEXT,Price INTEGER,Quantity INTEGER);
+
+INSERT INTO store VALUES (1,"Bajaj","Bearing Ball","Bearing",16.99,50000);
+INSERT INTO store VALUES (2,"Bajaj","Bearing Steel Cage","Bearing",26.99,56000);
+INSERT INTO store VALUES (3,"Bajaj","Cross","Body",1600.99,60000);
+INSERT INTO store VALUES (4,"Bajaj","Gear Satelitte","Transmission",1850.99,80000);
+INSERT INTO store VALUES (5,"Bajaj","Oil Seal","Fluid",18.99,30000);
+INSERT INTO store VALUES (6,"Engg","Gear Assy","Transmission",1600.99,40000);
+INSERT INTO store VALUES (7,"Engg","Pin Gear Multiple","Transmission",1050.99,36000);
+INSERT INTO store VALUES (8,"Engg","Assy Fuel Tank","Body",10050.99,96000);
+INSERT INTO store VALUES (9,"Engg","Gear Reverse Connector","Wiring",5.99,306000);
+INSERT INTO store VALUES (10,"Engg","Brake Cable","Cables",4.99,306000);
+INSERT INTO store VALUES (11,"Sun","Rubber Mounting","Cables",0.99,309000);
+INSERT INTO store VALUES (12,"Sun","Gear Tube Cable","Cables",0.99,309500);
+INSERT INTO store VALUES (13,"Sun","Reverse Cable","Cables",3.99,209000);
+INSERT INTO store VALUES (14,"Sun","Rear Brake Cable","Cables",5.99,309000);
+INSERT INTO store VALUES (15,"Sun","Clutch Cable","Cables",2.99,309000);
+
+--display the database ordered by price
+SELECT * FROM store
+ORDER BY price;
+
+--what is the avg price of Cables?
+SELECT AVG(price) "Avg Cable Price"
+FROM store
+where section='Cables';
+
+--what is the most expensive item and Brand?
+SELECT Brand,item,MAX(Price) 
+FROM store;
+
+--what Brand item has the highest quantity?
+SELECT Brand,item,MAX(quantity)
+FROM store;
+
+--what Brand item has the lowest quantity?
+SELECT Brand,item,MIN(quantity)
+FROM store;
