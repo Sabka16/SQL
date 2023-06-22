@@ -1,0 +1,79 @@
+--Based on a client list of 3 individuals, create a table named “clientsTb” that contains an individuals ID, name, address and phone number.
+
+
+CREATE TABLE clientsTb (id INTEGER PRIMARY KEY,name TEXT,address INTEGER,phone INTEGER);
+  
+
+INSERT INTO clientsTb 
+VALUES(1,'Jon snow','132 Main st winterfell,westeros','1234567859');
+INSERT INTO clientsTb 
+VALUES(2,'Arya Stark','134 Main st winterfell,westeros','1234567199'); 
+INSERT INTO clientsTb 
+VALUES(3,'Cersi Lannister','100 Main st Kings Landing,Westeros','6158569550');
+
+SELECT * FROM clientsTb;
+
+--Have another table that contains their department and employment status (in which is active or inactive)
+
+CREATE TABLE employmentTb (
+  ID INTEGER PRIMARY KEY,
+  Department TEXT,
+  Status TEXT
+);
+
+INSERT INTO employmentTb 
+VALUES(1,'Sales','Active');
+INSERT INTO employmentTb 
+VALUES(2,'Marketing','Active');
+INSERT INTO employmentTb 
+VALUES(3,'Accounting','Active');
+
+--Represent the client’s information which shows their personal information and their employment status.
+
+SELECT clientsTb.ID, clientsTb.Name, clientsTb.Address, clientsTb.Phone, employmentTb.Department, employmentTb.Status
+FROM clientsTb
+JOIN employmentTb ON clientsTb.ID = employmentTb.ID;
+
+--Update one user’s employment status to inactive. When displayed/queried again, it should reflect the change.
+
+UPDATE employmentTb
+SET Status = 'Inactive'
+WHERE ID = 2;
+
+
+SELECT clientsTb.ID, clientsTb.Name, clientsTb.Address, clientsTb.Phone, employmentTb.Department, employmentTb.Status
+FROM clientsTb
+JOIN employmentTb ON clientsTb.ID = employmentTb.ID;
+
+--Display only the active users.
+
+SELECT clientsTb.ID, clientsTb.Name, clientsTb.Address, clientsTb.Phone, employmentTb.Department, employmentTb.Status
+FROM clientsTb
+JOIN employmentTb ON clientsTb.ID = employmentTb.ID
+WHERE employmentTb.Status = 'Active';
+
+
+--Display only the inactive users.
+
+SELECT clientsTb.ID, clientsTb.Name, clientsTb.Address, clientsTb.Phone, employmentTb.Department, employmentTb.Status
+FROM clientsTb
+JOIN employmentTb ON clientsTb.ID = employmentTb.ID
+WHERE employmentTb.Status = 'Inactive';
+
+--Remove an inactive user and add a newer one. The newer active user should display accordingly when queried.
+
+DELETE FROM clientsTb WHERE ID = ('2');
+DELETE FROM employmentTb WHERE Status = ('Inactive');
+
+
+INSERT INTO clientsTb (ID, Name, Address, Phone)
+VALUES ('4', 'Robb Stark', '1145 Red wedding street deathvalley', '1234567890');
+
+INSERT INTO employmentTb (ID, Department, Status)
+VALUES ('4', 'Marketing', 'Active');
+
+
+SELECT clientsTb.ID, clientsTb.Name, clientsTb.Address, clientsTb.Phone, employmentTb.Department, employmentTb.Status
+FROM clientsTb
+JOIN employmentTb ON clientsTb.ID = employmentTb.ID
+WHERE employmentTb.Status = 'Active';
