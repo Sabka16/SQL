@@ -1,0 +1,36 @@
+SELECT count(*) FROM "netflix_people"
+
+SELECT  * FROM "netflix_people" LIMIT 5
+
+SELECT * FROM "netflix_titles_info" LIMIT 5
+
+-- Try to figure out which attribute you'd use to jin the two Netflix tables. How can you see what attributes (aka colums) there are in each table to find out what they have in common?
+SELECT people.show_id
+,people.director
+,titles.title
+,titles,type
+FROM "netflix_people" people
+LEFT JOIN "netflix_titles_info" titles
+ON people.show_id=titles.show_id;
+
+
+--how many movie titles are there in the database?
+SELECT count(*) 
+FROM "netflix_titles_info"
+WHERE type='Movie'
+
+--when was the most recent batch of tv shows and/or movies added to the database?
+SELECT max(date(date_added))
+FROM "netflix_titles_info";
+
+--List all the movies and tvshows in alphabetical order.
+SELECT title
+FROM "netflix_titles_info"
+ORDER BY title asc;
+
+--Who was the director for the movie The Sterling?
+SELECT director
+FROM "netflix_titles_info" titles
+LEFT JOIN "netflix_people" people
+ON titles.show_id=people.show_id
+WHERE titles.title='The Starling'
