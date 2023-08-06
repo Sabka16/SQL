@@ -1,0 +1,107 @@
+# For this project, I downloaded Spotify top 50 data from Kaggle.
+# Then I created a table to insert Spotify top 50 data into.
+# Finally, I performed analytics on the data using SQL. 
+
+#Creating the table: 
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL 
+)
+
+#Then I inserted the Spotify Data .csv into the table.
+
+#Next, I explored the data using the following SQL. 
+
+SELECT * FROM BIT_DB.Spotifydata
+
+
+--First i determined the top 10 songs in alphabetical order
+
+SELECT track_name
+FROM BIT_DB.Spotifydata
+ORDER BY track_name
+LIMIT 10
+
+
+--Then i determined who are the Top 10 artists are by popularity
+
+SELECT track_name, artist_name, popularity
+FROM BIT_DB.spotifydata
+ORDER BY popularity desc
+LIMIT 10
+
+--Then listed the  top 3 artist along with the number of their songs that appear in the top 50 chart
+
+SELECT artist_name, COUNT(*) AS song_count
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+ORDER BY song_count DESC
+LIMIT 3
+
+--Then i determined which artist has the most songs?
+
+SELECT artist_name,COUNT(*) AS song_count
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+ORDER BY song_count DESC
+LIMIT 1
+
+--Found out what is the average duration of songs?
+
+SELECT AVG(duration_ms) AS average_duration
+FROM BIT_DB.Spotifydata
+
+--Found out what is the average duration of songs (in seconds)?
+-- The data is given in milliseconds 
+
+SELECT AVG(duration_ms/1000) AS average_duration_seconds
+FROM BIT_DB.Spotifydata
+
+--Determined the average danceability by artist and track
+
+SELECT artist_name, track_name, AVG(danceability) AS average_danceability
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name, track_name
+ORDER BY average_danceability DESC
+
+
+-- Then i listed songs that have a danceability score higher than 0.7.
+SELECT track_name
+
+FROM BIT_DB.Spotifydata
+WHERE danceability >0.7
+
+--Then found the average danceability, energy, and valence scores for songs by the artist 'Ed Sheeran'.
+SELECT AVG(danceability) AS avg_danceability,
+       AVG(energy) AS avg_energy,
+       AVG(valence) AS avg_valence
+FROM BIT_DB.Spotifydata
+WHERE artist_name = 'Ed Sheeran'
+
+--Retrieved songs that have a tempo between 120 and 140 beats per minute?
+
+SELECT track_name, tempo
+FROM BIT_DB.Spotifydata
+WHERE tempo BETWEEN 120 AND 140
+
+
+
+
+
+--
